@@ -1,0 +1,29 @@
+﻿@model AddAccountViewModel
+<p>新增帳戶</p>
+<input asp-for="Email" />
+<input asp-for="NickName" />
+<input asp-for="PhoneNumber" />
+<input asp-for="Password" />
+<button id="addBtn" onclick="addAccount()">新增帳戶</button>
+
+@section SpecificScripts {
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous">
+    </script>
+    <script>
+        //$(function(){ // dom載入後執行
+        //    $("#addBtn").click(function() {console.log('ccc')})
+        //})
+
+        function addAccount() 
+        {
+            $.post("@Url.Action("AddAccountAddBtn", "Account")", { Email: $('#Email').val(), NickName: $('#NickName').val(), PhoneNumber: $('#PhoneNumber').val(), Password: $('#Password').val()}, function( data ) 
+            {
+                console.log(data);
+                alert("帳戶創建成功");
+            });
+        }
+    </script>
+}

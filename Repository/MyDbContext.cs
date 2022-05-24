@@ -11,5 +11,6 @@ namespace OnlineShop.Repository
         }
 
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<Item> Items { get; set; }
     }
 }

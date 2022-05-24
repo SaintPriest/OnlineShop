@@ -1,0 +1,38 @@
+﻿@model ItemViewModel 
+<p>新增商品</p>
+
+<div class="container">
+    <div class="row col-6 col-md-4">
+        <input asp-for = "Name">
+    </div>
+    <div class="row col-6 col-md-4">
+        <input asp-for="Type">
+    </div>
+</div>
+
+<input asp-for="Price" >
+<input asp-for="Description">
+
+<button id="addBtn" onclick="addItem()">新增商品</button>
+
+@section SpecificScripts {
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous">
+    </script>
+    <script>
+        //$(function(){ // dom載入後執行
+        //    $("#addBtn").click(function() {console.log('ccc')})
+        //})
+
+        function addItem() 
+        {
+            $.post("@Url.Action("AddItemBtn", "Item")", { Name: $('#Name').val(), Type: $('#Type').val(), Price: $('#Price').val(), Description: $('#Description').val()}, function( data ) 
+            {
+                console.log(data);
+                alert("新增商品成功");
+            });
+        }
+    </script>
+}

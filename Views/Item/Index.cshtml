@@ -1,0 +1,35 @@
+﻿@model ItemListViewModel
+
+<div class="inventroy-section container-fluid no-padding">
+<!-- Container -->
+<div class="container">
+    <div class="row">
+        <div style="margin: 0 4.5%" class="col-md-11 col-sm-11 content-area">
+            <!-- Row -->
+            <div class="row">
+                @foreach (var item in Model.Items)
+                {
+                    <div class="col-md-4 col-sm-6 col-xs-12 inventroy-box">
+                        <img src="@item.ImgSrc" alt="Inventory" />
+                        <span class="product-new-top carBoxTag">@item.Name</span>
+                        <div class="inventroy-content">
+                            <h3>@item.Name</h3>
+                            <div class="inv-boxs">
+                                <span>@item.Type</span>
+                                <span>@item.Description</span>
+                            </div>
+                            <h4><b id="carItem0_Price">$@item.Price</b></h4>
+                            <a id="carItem0_Link" href="@(Url.Action("","Inventory_single"))?watch=@(item.Id)" title="Book now">book now</a>
+                        </div>
+                    </div>
+                }
+            </div><!-- Row /- -->
+            <div class="padding-40"></div>
+            <nav class="ow-pagination">
+                <ul id="carItem-page" class="pagination"></ul>
+            </nav>
+            <div class="padding-50"></div>
+        </div>
+    </div>
+</div><!-- Container /- -->
+</div><!-- Main Section /- -->

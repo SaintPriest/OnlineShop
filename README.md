@@ -47,3 +47,5 @@
 * add-migration DB
 
 * update-database
+* 
+* 若有錯誤出現，請drop OnlineShop裡的所有table後重試

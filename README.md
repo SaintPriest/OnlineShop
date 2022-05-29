@@ -2,7 +2,7 @@
 
 ## Visual Studio 2022
 
-* 選擇 .NET桌面開發
+* 選擇 .NET桌面開發和ASP.NET與網頁程式開發
 
 * 在個別元件裡勾選安裝 .NET 5.0
 

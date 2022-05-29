@@ -1,0 +1,86 @@
+﻿@model OrderViewModel
+
+<div class="inventroy-section container-fluid no-padding">
+<!-- Container -->
+<h3>已下訂的訂單</h3>
+<div class="container">
+    <div class="row">
+        <div style="margin: 0 4.5%" class="col-md-11 col-sm-11 content-area">
+            <!-- Row -->
+            <div class="row">
+                @foreach (var item in Model.Items)
+                {
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <img src="@item.ImgSrc" alt="Image not available" />
+                        <p>商品名稱: @item.Name</p>
+                        <p>商品類型: @item.Type</p>
+                        <p>商品敘述: @item.Description</p>
+                        <p>商品價格: $@item.Price</p>
+                        <p>商品數量: @item.Count</p>
+                        <button id="deleteOrderBtn" onclick="deleteOrder(@item.Id)">刪除訂單</button>
+                        <button id="BuyBtn" onclick="">付款</button>
+                    </div>
+                }
+            </div><!-- Row /- -->
+            <div class="padding-40"></div>
+            <nav class="ow-pagination">
+                <ul id="carItem-page" class="pagination"></ul>
+            </nav>
+            <div class="padding-50"></div>
+        </div>
+    </div>
+</div><!-- Container /- -->
+<h3>收到的訂單</h3>
+<div class="container">
+    <div class="row">
+        <div style="margin: 0 4.5%" class="col-md-11 col-sm-11 content-area">
+            <!-- Row -->
+            <div class="row">
+                @foreach (var item in Model.ReceivedItems)
+                {
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <img src="@item.ImgSrc" alt="Image not available" />
+                        <p>商品名稱: @item.Name</p>
+                        <p>商品類型: @item.Type</p>
+                        <p>商品敘述: @item.Description</p>
+                        <p>商品價格: $@item.Price</p>
+                        <p>商品數量: @item.Count</p>
+                        <p>購買者: @item.BuyerName</p>
+                        <button id="" onclick="">查看訂單</button>
+                    </div>
+                }
+            </div><!-- Row /- -->
+            <div class="padding-40"></div>
+            <nav class="ow-pagination">
+                <ul id="carItem-page" class="pagination"></ul>
+            </nav>
+            <div class="padding-50"></div>
+        </div>
+    </div>
+</div><!-- Container /- -->
+</div><!-- Main Section /- -->
+
+@section SpecificScripts {
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous">
+    </script>
+    <script>
+        //$(function(){ // dom載入後執行
+        //    $("#addBtn").click(function() {console.log('ccc')})
+        //})
+
+        function deleteOrder(Id) 
+        {
+            $.post("@Url.Action("deleteOrderBtn", "Item")",  {ItemId: Id}, function( data ) 
+            {
+                console.log(Id);
+                console.log(data);
+                alert("已刪除商品訂單");
+                window.location.reload();
+            });
+        }
+        
+    </script>
+}

@@ -23,7 +23,7 @@ namespace OnlineShop.Controllers
             var viewModel = new AddAccountViewModel
             {
                 Email = "example@com",
-                Password="password"
+                Password = "password"
             };
             return View(viewModel);
         }
@@ -39,15 +39,26 @@ namespace OnlineShop.Controllers
         public IActionResult Login(Account account)
         {
             Account found = db.Accounts.Find(account.Email);
-            if(found == null)
+            if (found == null)
             {
                 return Json(false);
             }
-            if(found.Password == account.Password)
+            if (found.Password == account.Password)
             {
+                HttpContext.Response.Cookies.Append("Email", account.Email);
                 return Json(true);
             }
             return Json(false);
+        }
+        public IActionResult Logout()
+        {
+            HttpContext.Response.Cookies.Delete("Email");
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult Register()
+        {
+            return RedirectToAction("addAccount");
         }
     }
 }

@@ -1,17 +1,40 @@
 ﻿@model ItemViewModel 
-<p>新增商品</p>
 
+<h1>上架商品</h1>
 <div class="container">
-    <div class="row col-6 col-md-4">
-        <input asp-for = "Name">
+    <div class="row row-cols-auto">
+        <div class="col">
+            <p>新增商品</p>
+        </div>
+        <div class="col">
+            <input asp-for = "Name">    
+        </div>
     </div>
-    <div class="row col-6 col-md-4">
-        <input asp-for="Type">
+    <div class="row row-cols-auto">
+        <div class="col">
+            <p>商品選項</p>
+        </div>
+        <div class="col">
+            <input asp-for="Type">
+        </div>
+    </div>
+    <div class="row row-cols-auto">
+        <div class="col">
+            <p>商品價格</p>
+        </div>
+        <div class="col">
+            <input asp-for="Price" >
+        </div>
+    </div>
+    <div class="row row-cols-auto">
+        <div class="col">
+            <p>商品說明</p>
+        </div>
+        <div class="col">
+            <input asp-for="Description">
+        </div>
     </div>
 </div>
-
-<input asp-for="Price" >
-<input asp-for="Description">
 
 <button id="addBtn" onclick="addItem()">新增商品</button>
 

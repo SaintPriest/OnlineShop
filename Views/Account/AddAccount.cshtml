@@ -1,12 +1,43 @@
 ﻿@model AddAccountViewModel
-<p>新增帳戶</p>
-<dix class="mb-3">
-    <input asp-for="Email" />
-</dix>
+<h1>新增帳戶</h1>
+<div class="container">
+    <div class="row row-cols-auto">
+        <div class="col">
+            <p>帳戶Email</p>
+        </div>
+        <div class="col">
+            <input asp-for="Email" />
+        </div>
+    </div>
+    <div class="row row-cols-auto">
+        <div class="col">
+            <p>帳戶暱稱</p>
+        </div>
+        <div class="col">
+            <input asp-for="NickName" />
+        </div>
+    </div>
+    <div class="row row-cols-auto">
+        <div class="col">
+            <p>電話號碼</p>
+        </div>
+        <div class="col">
+            <input asp-for="PhoneNumber" />
+        </div>
+    </div>
+    <div class="row row-cols-auto">
+        <div class="col">
+            <p>帳戶密碼</p>
+        </div>
+        <div class="col">
+            <input asp-for="Password" />
+        </div>
+    </div>
+</div>
 
-<input asp-for="NickName" />
-<input asp-for="PhoneNumber" />
-<input asp-for="Password" />
+
+
+
 <button id="addBtn" onclick="addAccount()">新增帳戶</button>
 
 @section SpecificScripts {

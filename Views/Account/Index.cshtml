@@ -1,11 +1,29 @@
 ﻿@model AddAccountViewModel
 @{
 }
-<p>登入</p>
-<input asp-for="Email" />
-<input asp-for="Password" />
+<h1>登入</h1>
+<div class="container">
+    <div class="row row-cols-auto">
+        <div class="col">
+            <p>Email</p>
+        </div>
+        <div class="col">
+            <input asp-for="Email" />
+        </div>
+    </div>
+    <div class="row row-cols-auto">
+        <div class="col">
+            <p>密碼 &nbsp;</p>
+        </div>
+        <div class="col">
+            <input asp-for="Password" />
+        </div>
+    </div>
+</div>
+
 <button id="loginBtn" onclick="login()">登入</button>
-<a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="AddAccount">新增帳戶</a>
+<a asp-area="" asp-controller="Account" asp-action="AddAccount">新增帳戶</a>
+<button id="RegisterBtn" onclick="">新增帳戶</button>
 @section SpecificScripts {
     
     <script src="https://code.jquery.com/jquery-3.6.0.js"
@@ -13,10 +31,6 @@
     crossorigin="anonymous">
     </script>
     <script>
-        //$(function(){ // dom載入後執行
-        //    $("#addBtn").click(function() {console.log('ccc')})
-        //})
-
         function login() 
         {
             $.post("@Url.Action("Login", "Account")", { Email: $('#Email').val(), Password: $('#Password').val()}, function( data ) 

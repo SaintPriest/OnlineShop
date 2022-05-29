@@ -19,7 +19,7 @@
                                 <span>@item.Description</span>
                             </div>
                             <h4><b id="carItem0_Price">$@item.Price</b></h4>
-                            <a id="carItem0_Link" href="@(Url.Action("","Inventory_single"))?watch=@(item.Id)" title="Book now">book now</a>
+                            <button id="addOrderBtn" onclick="addOrder(@item.Id)">加入訂單</button>
                         </div>
                     </div>
                 }
@@ -33,3 +33,26 @@
     </div>
 </div><!-- Container /- -->
 </div><!-- Main Section /- -->
+
+@section SpecificScripts {
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous">
+    </script>
+    <script>
+        //$(function(){ // dom載入後執行
+        //    $("#addBtn").click(function() {console.log('ccc')})
+        //})
+
+        function addOrder(Id) 
+        {
+            $.post("@Url.Action("AddOrderBtn", "Item")", {ItemId: Id, Count: 1}, function( data ) 
+            {
+                console.log(Id);
+                console.log(data);
+                alert("已加入商品至訂單");
+            });
+        }
+    </script>
+}

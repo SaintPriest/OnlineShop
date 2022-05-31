@@ -1,27 +1,52 @@
 ﻿@model OrderViewModel
-
 <div class="inventroy-section container-fluid no-padding">
 <!-- Container -->
 <h3>已下訂的訂單</h3>
 <div class="container">
     <div class="row">
         <div style="margin: 0 4.5%" class="col-md-11 col-sm-11 content-area">
-            <!-- Row -->
-            <div class="row">
-                @foreach (var item in Model.Items)
-                {
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <img src="@item.ImgSrc" alt="Image not available" />
-                        <p>商品名稱: @item.Name</p>
-                        <p>商品類型: @item.Type</p>
-                        <p>商品敘述: @item.Description</p>
-                        <p>商品價格: $@item.Price</p>
-                        <p>商品數量: @item.Count</p>
-                        <button id="deleteOrderBtn" onclick="deleteOrder(@item.Id)">刪除訂單</button>
-                        <button id="BuyBtn" onclick="">付款</button>
+            @foreach (var item in Model.Items)
+            {
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <hr class="mt-2 mb-3" />
+                    <h5>商品名稱: @item.Name</h5>
+                    <img src="@item.ImgSrc" alt="Image not available" />
+                    <p>商品類型: @item.Type</p>
+                    <p>商品敘述: @item.Description</p>
+                    <p>商品價格: $@item.Price</p>
+                    <p>商品數量: @item.Count</p>
+                    <button id="deleteOrderBtn" onclick="deleteOrder(@item.Id)">刪除訂單</button>
+                    @if(item.Status == null)
+                        {
+                            <a class="nav-link text-dark btn btn-primary btn-lg active"  asp-area="" asp-controller="Item" asp-action="Payment" asp-route-itemId="@item.Id">付款</a>
+                        }
+                        else
+                        {
+                            <p>付款成功</p>
+                            @if(item.Rate == -1)
+                            {
+                                <p>評價星數: </p>
+                                <select id="SelectStar">
+                                    <option value="0">請選擇</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                <p>評論: </p>
+                                <input id="Comment" />
+                                <button id="sendReviewBtn" onclick="sendReview(@item.Id)">加入評價</button>
+                            }
+                            else
+                            {
+                                <h5>你的評價</h5>
+                                <p>評價星數: @item.Rate</p>
+                                <p>評論: @item.Comment</p>
+                            }
+                        }
                     </div>
-                }
-            </div><!-- Row /- -->
+            }
             <div class="padding-40"></div>
             <nav class="ow-pagination">
                 <ul id="carItem-page" class="pagination"></ul>
@@ -70,10 +95,9 @@
         //$(function(){ // dom載入後執行
         //    $("#addBtn").click(function() {console.log('ccc')})
         //})
-
         function deleteOrder(Id) 
         {
-            $.post("@Url.Action("deleteOrderBtn", "Item")",  {ItemId: Id}, function( data ) 
+            $.post("@Url.Action("deleteOrderBtn", "Item")",  {ItemId: Id}, function (data) 
             {
                 console.log(Id);
                 console.log(data);
@@ -81,6 +105,14 @@
                 window.location.reload();
             });
         }
-        
+        function sendReview(Id) 
+        {
+            $.post("@Url.Action("sendReviewBtn","Item")", { ItemId: Id, Rate: $('#SelectStar :selected').text(), Comment: $('#Comment').val() }, function (data) 
+            {
+                console.log(data);
+                alert("已成功加入評價");
+                window.location.reload();
+            });
+        }
     </script>
 }

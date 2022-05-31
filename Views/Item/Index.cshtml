@@ -11,7 +11,6 @@
                 {
                     <div class="col-md-4 col-sm-6 col-xs-12 inventroy-box">
                         <img src="@item.ImgSrc" alt="Inventory" />
-                        <span class="product-new-top carBoxTag">@item.Name</span>
                         <div class="inventroy-content">
                             <h3>@item.Name</h3>
                             <div class="inv-boxs">
@@ -20,6 +19,7 @@
                             </div>
                             <h4><b id="carItem0_Price">$@item.Price</b></h4>
                             <button id="addOrderBtn" onclick="addOrder(@item.Id)">加入訂單</button>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="Detail" asp-route-itemId="@item.Id">檢視商品</a>
                         </div>
                     </div>
                 }

@@ -16,14 +16,13 @@
             <p>密碼 &nbsp;</p>
         </div>
         <div class="col">
-            <input asp-for="Password" />
+            <input type="password" asp-for="Password" />
         </div>
     </div>
 </div>
 
 <button id="loginBtn" onclick="login()">登入</button>
 <a asp-area="" asp-controller="Account" asp-action="AddAccount">新增帳戶</a>
-<button id="RegisterBtn" onclick="">新增帳戶</button>
 @section SpecificScripts {
     
     <script src="https://code.jquery.com/jquery-3.6.0.js"
@@ -38,6 +37,7 @@
                 console.log(data);
                 if (data == true) {
                     alert("登入成功");
+                    window.location.href = '/Item';
                 }
                 else {
                     alert("登入失敗，使用者或密碼錯誤");

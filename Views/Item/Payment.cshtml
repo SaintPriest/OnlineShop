@@ -1,0 +1,48 @@
+﻿@model ItemPaymentViewModel
+
+<div>
+    <img src="@Model.ImgSrc" alt="Inventory" />
+    <div class="inventroy-content">
+        <h3>@Model.Name</h3>
+        <div class="inv-boxs">
+            <span>@Model.Type</span>
+            <span>@Model.Description</span>
+        </div>
+        <h4>$ @Model.TotalPrice</h4>
+        <h3>請選擇付款方式</h3>
+        <select id="SelectPayment">
+            <option value="LinePay">LinePay</option>
+            <option value="PiWallet">Pi錢包</option>
+            <option value="CreditCard">信用卡</option>
+            <option value="BitCoin">比特幣</option>
+            <option value="Ethereum" >以太坊</option>
+        </select>
+        <h3>寄送地址</h3>
+        <input asp-for="Address" />
+        <button id="PaymentBtn" onclick="Payment(@Model.OrderId)">立即付款</button>
+    </div>
+</div>
+
+@section SpecificScripts {
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous">
+    </script>
+    <script>
+        //$(function(){ // dom載入後執行
+        //    $("#addBtn").click(function() {console.log('ccc')})
+        //})
+
+        function Payment(Id) 
+        {
+            $.post("@Url.Action("PaymentBtn", "Item")", {OrderId: Id, Method: $('#SelectPayment :selected').text(), Status: "OK", Address: $('#Address').val()}, function( data ) 
+            {
+                console.log(Id);
+                console.log(data);
+                alert("已完成付款");
+                window.location.href = '/Item/Order';
+            });
+        }
+    </script>
+}

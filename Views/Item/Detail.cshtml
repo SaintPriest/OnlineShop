@@ -1,0 +1,52 @@
+﻿@model ItemDetailViewModel
+
+<div>
+    <div class="container">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+                    <img src="@Model.ImgSrc" alt="Image not available" />
+                    <h4>商品名稱: @Model.Name</h4>
+                    <h4>商品類型: @Model.Type</h4>
+                    <h4>商品敘述: @Model.Description</h4>
+        </div>
+        <h4>$@Model.Price</h4>
+        <button id="addOrderBtn" onclick="addOrder(@Model.Id)">加入訂單</button>
+        <h3>商品評價</h3>
+        @foreach(var review in Model.Reviews)
+        {
+            <div class="row row-cols-auto">
+                <div class="col">
+                    <p>@review.BuyerEmail</p>
+                </div>
+                <div class="col">
+                    <p>評價星數: @review.Rate</p>
+                </div>
+                <div class="col">
+                    <p>評論: @review.Comment</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section SpecificScripts {
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous">
+    </script>
+    <script>
+        //$(function(){ // dom載入後執行
+        //    $("#addBtn").click(function() {console.log('ccc')})
+        //})
+
+        function addOrder(Id) 
+        {
+            $.post("@Url.Action("AddOrderBtn", "Item")", {ItemId: Id, Count: 1}, function( data ) 
+            {
+                console.log(Id);
+                console.log(data);
+                alert("已加入商品至訂單");
+            });
+        }
+    </script>
+}

@@ -13,5 +13,7 @@ namespace OnlineShop.Repository
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet <Order> Orders { get; set; }
+        public DbSet <Review> Reviews { get; set; }
+        public DbSet <Payment> Payments  { get; set; }
     }
 }

@@ -10,5 +10,8 @@
         public string ImgSrc { get; set; }
         public int Count  { get; set; }
         public string BuyerName { get; set; }
+        public string Status { get; set; }
+        public int Rate { get; set; }
+        public string Comment { get; set; }
     }
 }

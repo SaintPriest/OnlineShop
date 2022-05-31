@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,17 +24,28 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="Index">首頁</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">登入</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="AddItem">商品上架</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="Order">訂單</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">登出</a>
-                        </li>
+                        @{
+                            if(Context.Request.Cookies["Email"] == null)
+                            {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">登入</a>
+                                    </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">登出</a>                              
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark">@Context.Request.Cookies["Email"]</a>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>

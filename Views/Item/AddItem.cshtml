@@ -15,7 +15,14 @@
             <p>商品選項</p>
         </div>
         <div class="col">
-            <input asp-for="Type">
+            <select ID="SelectItemOption" runat="server">
+                <option  Value="-1">請選擇商品選項</option>
+                <option Value="ebook">電子書</option>
+                <option Value="book">實體書</option>
+                <option Value="CD">CD</option>
+                <option Value="MP3">MP3</option>
+            </select>
+            <!--input asp-for="Type"-->
         </div>
     </div>
     <div class="row row-cols-auto">
@@ -32,6 +39,14 @@
         </div>
         <div class="col">
             <input asp-for="Description">
+        </div>
+    </div>
+    <div class="row row-cols-auto">
+        <div class="col">
+            <p>商品圖片網址</p>
+        </div>
+        <div class="col">
+            <input asp-for="ImgSrc">
         </div>
     </div>
 </div>
@@ -51,10 +66,11 @@
 
         function addItem() 
         {
-            $.post("@Url.Action("AddItemBtn", "Item")", { Name: $('#Name').val(), Type: $('#Type').val(), Price: $('#Price').val(), Description: $('#Description').val()}, function( data ) 
+            $.post("@Url.Action("AddItemBtn", "Item")", { Name: $('#Name').val(), Type: $('#SelectItemOption :selected').text(), Price: $('#Price').val(), Description: $('#Description').val(), ImgSrc: $('#ImgSrc').val()}, function( data ) 
             {
                 console.log(data);
                 alert("新增商品成功");
+                window.location.href('/..');
             });
         }
     </script>

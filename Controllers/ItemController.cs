@@ -62,10 +62,7 @@ namespace OnlineShop.Controllers
         [HttpPost]
         public IActionResult AddOrderBtn(Order order)
         {
-            if(!HttpContext.Request.Cookies.TryGetValue("Email", out string Email))
-            {
-                return RedirectToAction("Index", "Account");
-            }
+            HttpContext.Request.Cookies.TryGetValue("Email", out string Email);
             order.BuyerEmail = Email;
             Order? oldOrder = db.Orders.FirstOrDefault(x => x.ItemId == order.ItemId && x.BuyerEmail == Email);
             if (oldOrder != null) //已經有重複訂單，同一買家買同個商品
@@ -80,14 +77,19 @@ namespace OnlineShop.Controllers
             db.SaveChanges();
             return Json(order);
         }
-        public IActionResult Order()
+        public IActionResult Order() //Order 頁面
         {
-            HttpContext.Request.Cookies.TryGetValue("Email", out string Email);
+            if(!HttpContext.Request.Cookies.TryGetValue("Email", out string Email))
+            {
+                return RedirectToAction("Index", "Account");
+            }
             var viewModel = new OrderViewModel { Items = new List<ItemViewModel>(), ReceivedItems = new List<ItemViewModel>() };
             List<Order> orders = db.Orders.ToList().Where(x => x.BuyerEmail == Email).ToList();
             foreach (var order in orders)
             {
                 Item item = db.Items.Find(order.ItemId);
+                Payment payment = db.Payments.FirstOrDefault(x => x.OrderId == order.Id);
+                Review review = db.Reviews.FirstOrDefault(x => x.ItemId == item.Id && x.BuyerEmail == Email);
                 viewModel.Items.Add(new ItemViewModel 
                 {
                     Id = item.Id,
@@ -96,7 +98,10 @@ namespace OnlineShop.Controllers
                     Price = item.Price,
                     Type = item.Type,
                     ImgSrc = item.ImgSrc,
-                    Count = order.Count
+                    Count = order.Count,
+                    Status = payment != null ? payment.Status : null,
+                    Rate = review != null? review.Rate : -1,
+                    Comment = review != null? review.Comment : " ",
                 });
             }
             List<int> ItemIdList = db.Items.ToList().Where(x => x.OwnerEmail == Email).Select(x => x.Id).ToList();
@@ -127,6 +132,53 @@ namespace OnlineShop.Controllers
             db.Orders.Remove(order);
             db.SaveChanges();
             return Json(order);
+        }
+        public IActionResult Detail(int itemId)
+        {
+            Item item = db.Items.Find(itemId);
+            var viewModel = new ItemDetailViewModel
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                Price = item.Price,
+                Type = item.Type,
+                ImgSrc = item.ImgSrc,
+                Reviews = db.Reviews.Where(x => x.ItemId == itemId).ToList(),
+            };
+            return View(viewModel);
+        }
+        [HttpPost]
+        public IActionResult sendReviewBtn(Review review)
+        {
+            HttpContext.Request.Cookies.TryGetValue("Email", out string Email);
+            review.BuyerEmail = Email;
+            db.Reviews.Add(review);
+            db.SaveChanges();
+            return Json(review);
+        }
+        public IActionResult Payment(int itemId)
+        {
+            HttpContext.Request.Cookies.TryGetValue("Email", out string Email);
+            Order order = db.Orders.First(x => x.ItemId == itemId && x.BuyerEmail == Email);
+            Item item = db.Items.Find(itemId);
+            var viewModel = new ItemPaymentViewModel
+            {
+                OrderId = order.Id,
+                Name = item.Name,
+                Description = item.Description,
+                TotalPrice =item.Price * order.Count,
+                Type = item.Type,
+                ImgSrc = item.ImgSrc,
+            };
+            return View(viewModel);
+        }
+        [HttpPost]
+        public IActionResult PaymentBtn(Payment payment)
+        {
+            db.Payments.Add(payment);
+            db.SaveChanges();
+            return Json(payment);
         }
     }
 }

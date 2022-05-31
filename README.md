@@ -10,14 +10,14 @@
 
 1. MySql Server 8.0.29
 
-* 名稱請設為 localhost (大小寫需相符)
+* 名稱任意英文即可
 
 * 密碼請設為 root (大小寫需相符)
 
 * 其餘預設值即可
 
 2. MySQl Workbench 8.0.29
-* 選擇性安裝
+* 建議安裝以管理資料庫並可進行drop table
 
 ## NuGet套件
 
